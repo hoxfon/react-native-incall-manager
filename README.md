@@ -23,40 +23,40 @@ you can find demo here: https://github.com/oney/RCTWebRTCDemo
 
 #### BREAKING NOTE:
 
-* since `2.1.0`, you should use `RN 40+` and upgrade your xcode to support `swift 3`.  
-  after upgrading xcode, `Edit -> Convert -> To Current Swift Syntax` to invoke `Swift Migration Assistant`  
+* since `2.1.0`, you should use `RN 40+` and upgrade your xcode to support `swift 3`.
+  after upgrading xcode, `Edit -> Convert -> To Current Swift Syntax` to invoke `Swift Migration Assistant`
   see [Migrating to Swift 2.3 or Swift 3 from Swift 2.2](https://swift.org/migration-guide/)
- 
+
 * for old RN versions (RN < 0.40) please use version `1.5.4` ( Swift 2.2~2.3 )
 
 
-**from npm package**: `npm install react-native-incall-manager`  
-**from git package**: `npm install git://github.com/zxcpoiu/react-native-incall-manager.git`  
+**from npm package**: `npm install react-native-incall-manager`
+**from git package**: `npm install git://github.com/zxcpoiu/react-native-incall-manager.git`
 
 ===================================================
 ### android:
 
-After install, you can use `rnpm` (`npm install rnpm -g`) to link android.  
+After install, you can use `rnpm` (`npm install rnpm -g`) to link android.
 use `rnpm link react-native-incall-manager` to link or manually if you like.
 
-We use android support library v4 to check/request permissions.  
-You should add `compile "com.android.support:support-v4:23.0.1"` in `$your_project/android/app/build.gradle` dependencies on android.  
+We use android support library v4 to check/request permissions.
+You should add `compile "com.android.support:support-v4:23.0.1"` in `$your_project/android/app/build.gradle` dependencies on android.
 
 #### Manually Link
 
-if rnpm link doesn't work. ( see: https://github.com/zxcpoiu/react-native-incall-manager/issues/21#issuecomment-279575516 )  
+if rnpm link doesn't work. ( see: https://github.com/zxcpoiu/react-native-incall-manager/issues/21#issuecomment-279575516 )
 please add it manually in your main project:
 
 1. in `android/app/build.gradle`
     should have a line `compile(project(':react-native-incall-manager'))` in `dependencies {}` section
 
 2. in `android/settings.gradle`
-    should have: 
+    should have:
     ```
     include ':react-native-incall-manager'
 project(':react-native-incall-manager').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-incall-manager/android')
     ```
-    
+
 3. in `MainApplication.java`
 
     ```java
@@ -71,14 +71,14 @@ project(':react-native-incall-manager').projectDir = new File(rootProject.projec
     ```
 #### optional sound files on android
 
-if you want to use bundled ringtone/ringback/busytone sound instead of system sound,  
-put files in `android/app/src/main/res/raw`  
-and rename file correspond to sound type:  
+if you want to use bundled ringtone/ringback/busytone sound instead of system sound,
+put files in `android/app/src/main/res/raw`
+and rename file correspond to sound type:
 
 ```
-incallmanager_busytone.mp3  
-incallmanager_ringback.mp3  
-incallmanager_ringtone.mp3 
+incallmanager_busytone.mp3
+incallmanager_ringback.mp3
+incallmanager_ringtone.mp3
 ```
 
 on android, as long as your file extension supported by android, this module will load it.
@@ -87,9 +87,9 @@ on android, as long as your file extension supported by android, this module wil
 
 ### ios:
 
-since ios part written in swift and it doesn't support static library yet.  
-before that, you should add this project manually  
-please do it step by step carefully :pray: :  
+since ios part written in swift and it doesn't support static library yet.
+before that, you should add this project manually
+please do it step by step carefully :pray: :
 
 #### Add files in to your project:
 
@@ -101,6 +101,7 @@ please do it step by step carefully :pray: :
   4. on the pou-up window, uncheck `Copy items if needed` and select `Added folders: Create groups` then add it. you will see a new directory named `RNInCallmanager under your_project` directory.
 
 #### Setup Objective-C Bridging Header:
+
   1. click your `project's xcodeproject root`, go to `build setting` and search `Objective-C Bridging Header`
   2. set you header location, the default path is: `ReactNativeProjectRoot/ios/`,
      in this case, you should set `../node_modules/react-native-incall-manager/ios/RNInCallManager/RNInCallManager-Bridging-Header.h`
@@ -119,7 +120,7 @@ please do it step by step carefully :pray: :
 
 #### optional sound files on android
 
-if you want to use bundled ringtone/ringback/busytone sound instead of system sound 
+if you want to use bundled ringtone/ringback/busytone sound instead of system sound
 
 1. add files into your_project directory under your project's xcodeproject root. ( or drag into it as described above. )
 2. check `copy file if needed`
@@ -127,8 +128,8 @@ if you want to use bundled ringtone/ringback/busytone sound instead of system so
 
 ```
 incallmanager_busytone.mp3
-incallmanager_ringback.mp3 
-incallmanager_ringtone.mp3 
+incallmanager_ringback.mp3
+incallmanager_ringtone.mp3
 ```
 
 on ios, we only support mp3 files currently.
@@ -140,7 +141,7 @@ This module implement a basic handle logic automatically, just:
 ```javascript
 import InCallManager from 'react-native-incall-manager';
 
-// --- start manager when the chat start based on logics of your app 
+// --- start manager when the chat start based on logics of your app
 // On Call Established:
 InCallManager.start({media: 'audio'}); // audio/video, default: audio
 
@@ -200,6 +201,16 @@ DeviceEventEmitter.addListener('Proximity', function (data) {
 
 ```
 
+if you want to use the proximity sensor:
+
+```javascript
+// ringback is basically for OUTGOING call. and is part of start().
+
+InCallManager.startInCallProximity({media: 'audio'});
+//when the call is terminated you can release the proximity status
+InCallManager.stopInCallProximity();
+```
+
 ## About Permission:
 
 
@@ -229,7 +240,7 @@ if (InCallManager.recordPermission !== 'granted') {
 }
 ```
 
-We use android support library v4 to check/request permissions.  
+We use android support library v4 to check/request permissions.
 You should add `compile "com.android.support:support-v4:23.0.1"` in `$your_project/android/app/build.gradle` dependencies on android.
 
 
@@ -237,11 +248,11 @@ You should add `compile "com.android.support:support-v4:23.0.1"` in `$your_proje
 
 React Native does not officially support api 23 currently ( it is on api 22 now. see: [RN known issues](https://facebook.github.io/react-native/docs/known-issues.html#android-m-permissions)) and android supports request permission at runtime since api 23, so it will always return 'granted' immediately after calling `checkRecordPermission()` or `requestRecordPermission()`.
 
-If you really need the functionality, you can do the following to make them work but at your own risk:  
+If you really need the functionality, you can do the following to make them work but at your own risk:
 ( I've tested it though, but who knows :) )
 
-Step 1: change your `targetSdkVersion` to 23 in `$your_project/android/app/build.gradle`  
-Step 2: override `onRequestPermissionsResult` in your `MainActivity.java` like:  
+Step 1: change your `targetSdkVersion` to 23 in `$your_project/android/app/build.gradle`
+Step 2: override `onRequestPermissionsResult` in your `MainActivity.java` like:
 
 ```
     @Override
@@ -255,9 +266,9 @@ then you can test it on android 6 now.
 
 **Another thing you should know is:**
 
-If you change targetSdkVersion to 23, the `red box` which React Native used to display errors in development mode requires permission `Draw Over Other Apps`.  
-So in **development mode**, you should manually grant permission in `app settings` on your device or declare `android.permission.SYSTEM_ALERT_WINDOW` in your manifest.  
-You don't have to do this in **release mode** since there are no red box.  
+If you change targetSdkVersion to 23, the `red box` which React Native used to display errors in development mode requires permission `Draw Over Other Apps`.
+So in **development mode**, you should manually grant permission in `app settings` on your device or declare `android.permission.SYSTEM_ALERT_WINDOW` in your manifest.
+You don't have to do this in **release mode** since there are no red box.
 
 
 checkout this awesome project: [react-native-android-permissions](https://github.com/lucasferreira/react-native-android-permissions) by @lucasferreira for more information.
@@ -265,7 +276,7 @@ checkout this awesome project: [react-native-android-permissions](https://github
 
 ## Automatic Basic Behavior:
 
-**on start:**  
+**on start:**
 * store current settings, set KeepScreenOn flag = true, and register some event listeners.
 * if media type is `audio`, route voice to earpiece, otherwise route to speaker.
 * audio will enable proximity sensor which is disabled by default if media=video
@@ -273,12 +284,12 @@ checkout this awesome project: [react-native-android-permissions](https://github
 * when newly external device plugged, such as wired-headset, route audio to external device.
 * optional play ringback
 
-**on stop:**  
+**on stop:**
 
 * set KeepScreenOn flag = false, remote event listeners, restore original user settings.
 * optional play busytone
 
-## Custom Behavior:  
+## Custom Behavior:
 
 you can custom behavior use API/events exposed by this module. see `API` section.
 
